@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Gallery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    /* Navigation */
+    header {
+      background-color: #6a0dad;
+      box-shadow: 0 4px 12px rgba(106, 13, 173, 0.3);
+    }
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 70px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 12px 25px;
+      margin: 0 5px;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 30px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    nav a:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: width 0.4s ease;
+      z-index: -1;
+    }
+    nav a:hover:before,
+    nav a.active:before {
+      width: 100%;
+    }
+    nav a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(106, 13, 173, 0.4);
+    }
+    nav a.active {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .header h1 {
+      color: #6a0dad;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+    }
+    .header h1:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(to right, #6a0dad, #9d4edd);
+      border-radius: 3px;
+    }
+    
+    .header p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .search-container {
+      display: flex;
+      margin: 0 auto 30px;
+      max-width: 600px;
+      box-shadow: 0 5px 15px rgba(106, 13, 173, 0.1);
+      border-radius: 30px;
+      overflow: hidden;
+    }
+    
+    .search-container input {
+      flex: 1;
+      padding: 15px 20px;
+      border: none;
+      font-size: 16px;
+      outline: none;
+    }
+    
+    .search-container button {
+      padding: 0 25px;
+      background: linear-gradient(to right, #6a0dad, #9d4edd);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .search-container button:hover {
+      background: linear-gradient(to right, #5a0b9d, #8d3ecf);
+    }
+    
+    .count-display {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #6a0dad;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+    
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .gallery-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(106, 13, 173, 0.1);
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+    }
+    .gallery-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(106, 13, 173, 0.2);
+    }
+    
+    .gallery-photo {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-bottom: 1px solid #f0e6ff;
+      transition: transform 0.5s ease;
+    }
+    .gallery-card:hover .gallery-photo {
+      transform: scale(1.05);
+    }
+    
+    .gallery-details {
+      padding: 20px;
+    }
+    
+    .gallery-details h3 {
+      margin: 0 0 15px;
+      color: #6a0dad;
+      font-size: 1.3rem;
+    }
+    
+    .gallery-details p {
+      margin: 10px 0;
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    .gallery-details i {
+      width: 20px;
+      color: #9d4edd;
+      margin-right: 10px;
+    }
+    
+    .no-results {
+      text-align: center;
+      grid-column: 1 / -1;
+      padding: 40px;
+      color: #7f8c8d;
+      font-size: 1.2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(106, 13, 173, 0.1);
+    }
+    
+    footer {
+      background: #6a0dad;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      margin-top: 60px;
+      position: relative;
+    }
+    footer:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 10px;
+      background: linear-gradient(to right, #6a0dad, #9d4edd, #6a0dad);
+    }
+    footer p {
+      margin: 0;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    footer p i {
+      color: #ffd700;
+      margin: 0 5px;
+    }
+    
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 0;
+      }
+      nav a {
+        margin: 8px 0;
+        width: 80%;
+        text-align: center;
+      }
+      
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+      
+      .header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="executives.html">Executive Team</a>
+      <a href="gallery.html" class="active">Gallery</a>
+      <a href="albums.html">Photo Albums</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="header">
+      <h1>Class Photo Gallery</h1>
+      <p>Meet all your classmates with complete contact details</p>
+    </div>
+    
+    <div class="search-container">
+      <input type="text" id="search" placeholder="Search classmates by name, phone, email...">
+      <button id="search-btn"><i class="fas fa-search"></i> Search</button>
+    </div>
+    
+    <div class="count-display" id="classmate-count">
+      Loading classmates...
+    </div>
+    
+    <div class="gallery" id="classmate-gallery">
+      <!-- Classmate cards will be inserted here by JavaScript -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Our Class. Designed with <i class="fas fa-heart"></i> by Class Executives</p>
+  </footer>
+
+  <script>
+    // Complete classmate data
+    const classmates = [
+  
+{
+    "SN": 1,
+    "NAME": "YUSUF YAKUBU YUSUF",
+    "PHONE": "8066916130",
+    "EMAIL": "yusufyakubuyusuf@gmail.com",
+    "Date of birth": "02-02",
+    "Address": "No 7 Umar Idris Dangaladima street, Hayin Malam Bello, Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400"
+  },
+  {
+    "SN": 2,
+    "NAME": "Rhoda Auta",
+    "PHONE": "8108344506",
+    "EMAIL": "autarhoda222@gmail.com",
+    "Date of birth": "09-06",
+    "Address": "No 72. Sarki street Romi Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+    {
+    "SN": 3.0,
+    "NAME": "Abdullateef Opemipo Otolowo",
+    "PHONE": "8130964767.0",
+    "EMAIL": "Abdullateefotolowo14@gmail.com",
+    "Date of birth": "06-14",
+    "Address": "NP 10 Kagoro by Express, Makarfi Road, Maude Gyani Street, Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+   {
+    "SN": 4.0,
+    "NAME": "Bilkisu Usman Rumah",
+    "PHONE": "8065992015.0",
+    "EMAIL": "beerumahsstore@gmail.com",
+    "Date of birth": "",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 5.0,
+    "NAME": "Ahmad isah",
+    "PHONE": "7066234353.0",
+    "EMAIL": "a.daura9@gmail.com",
+    "Date of birth": "02-01",
+    "Address": "AY 20 faskari road sabon gari tudun wada kaduna,kaduna south",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 6.0,
+    "NAME": "Salim Ishaq Guibi",
+    "PHONE": "8140767257.0",
+    "EMAIL": "sirguibi1@gmail.com",
+    "Date of birth": "11-19",
+    "Address": "Q1 Adamawa Road Kinkinau Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/17EEfyJimho29lfQhLfsrOQEUgmNkhene=w400"
+  },
+  {
+    "SN": 7.0,
+    "NAME": "Zulaihat Muhammed Bashir",
+    "PHONE": "8169094162.0",
+    "EMAIL": "zulaihatmuhammedbashir@gmail.com",
+    "Date of birth": "04-07",
+    "Address": "ND2 Oshogbo Road Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 8.0,
+    "NAME": "Amina Nasir",
+    "PHONE": "7035193783.0",
+    "EMAIL": "aminanasirsadiq@gmail.com",
+    "Date of birth": "10-18",
+    "Address": "No 10 USMANIYYA close unguwar sunusi",
+    "photo": "https://lh3.googleusercontent.com/d/1aEl44_GtmXcjvKbPKnZdrqJq_RSBqhHm=w400"
+  },
+  {
+    "SN": 9.0,
+    "NAME": "Saleem Aliyu Mamman",
+    "PHONE": "9032304172.0",
+    "EMAIL": "saleemaliyum@gmail.com",
+    "Date of birth": "2025-09-01 00:00:00",
+    "Address": "No 21 USMANIYYA close unguwar sunusi",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 10.0,
+    "NAME": "Abdulrahman Suleiman Suleiman",
+    "PHONE": "8166861444.0",
+    "EMAIL": "abilitysman@outlook.com",
+    "Date of birth": "",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 11.0,
+    "NAME": "Mustapha Muhammad Iliyas",
+    "PHONE": "8108344447.0",
+    "EMAIL": "muhammad1995mustapha1995@gmail.com",
+    "Date of birth": "",
+    "Address": "No. 56 Anguwan Zakara, Kaura, Zaria City. Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 12.0,
+    "NAME": "Ridwan Abdulazeez Yusuf",
+    "PHONE": "7062398354.0",
+    "EMAIL": "ridson4real@gmail.com",
+    "Date of birth": "28th January",
+    "Address": "Tina Jos, Plateau state",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 13.0,
+    "NAME": "Bappah Firdausi yusuf",
+    "PHONE": "8108096264.0",
+    "EMAIL": "fiddy005@gmail.com",
+    "Date of birth": "09-10",
+    "Address": "No 24, Fulani road rafin guza kawo Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/17SnyBLkB1m-cMcD0Pe8EJk-4MJgM0G6w"
+  },
+  {
+    "SN": 14.0,
+    "NAME": "Ummusalama Abdulkadir Abba",
+    "PHONE": "8034241214.0",
+    "EMAIL": "abbaummusalma@gmail.com",
+    "Date of birth": "07-16",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 15.0,
+    "NAME": "Ahmad Uba Rahama",
+    "PHONE": "8036544565.0",
+    "EMAIL": "aurahama7@gmail.com",
+    "Date of birth": "",
+    "Address": "",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 16.0,
+    "NAME": "Abbas Sule Ahmadu",
+    "PHONE": "7035881383.0",
+    "EMAIL": "ahmadabbas696@gmail.com",
+    "Date of birth": "06-12",
+    "Address": "No. A 23 Lathe close Kadpoly Panteka Housing Estate Tudun Wada Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1A-wznldtCuWdqRKeL7QyyL5f0v9LDdWV=w400"
+  },
+  {
+    "SN": 17.0,
+    "NAME": "Nafisat Oziohu Suleiman",
+    "PHONE": "8160029491.0",
+    "EMAIL": "Nafisat1994@gmail.com",
+    "Date of birth": "04-05",
+    "Address": "Hayin Malam Bello Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1aU208PiukXqunGrEsaz7xsFFLbBaIqwy=w400"
+  },
+  {
+    "SN": 18.0,
+    "NAME": "Christopher A. Bature",
+    "PHONE": "8148429908.0",
+    "EMAIL": "Christopherbature1@gmail.com",
+    "Date of birth": "30th September",
+    "Address": "",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 19.0,
+    "NAME": "Fauziya Abdusalam",
+    "PHONE": "8096788796.0",
+    "EMAIL": "abdussalamfauziya@gmail.com",
+    "Date of birth": "04-01",
+    "Address": "",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 20.0,
+    "NAME": "Japheth Benjamin",
+    "PHONE": "8160969021.0",
+    "EMAIL": "japhxongz@gmail.com",
+    "Date of birth": "10-06",
+    "Address": "No 10 off kagoro road Romi New Extension. Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 21.0,
+    "NAME": "Hadi Auwal",
+    "PHONE": "7066954331.0",
+    "EMAIL": "hadeeauwal24@gmail.com",
+    "Date of birth": "03-07",
+    "Address": "",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 22.0,
+    "NAME": "Asma'u Abdullahi Tanko",
+    "PHONE": "8068222680.0",
+    "EMAIL": "asmauahat94@gmail.com",
+    "Date of birth": "11-16",
+    "Address": "Unguwan Rimi, Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/19OyDg2L7jbRE8lQaSKyiSk8mdtJMut8U=w400"
+  },
+  {
+    "SN": 23.0,
+    "NAME": "Samira Muhammad Idris",
+    "PHONE": "8036961800.0",
+    "EMAIL": "Samiramuhammedidris@gmail.com",
+    "Date of birth": "",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 24.0,
+    "NAME": "Abdullahi Nura Bako",
+    "PHONE": "8061606610.0",
+    "EMAIL": "Nurabako111@gmail.com",
+    "Date of birth": "01-28",
+    "Address": "P.8 yola road tudun nupawa Kaduna",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 25.0,
+    "NAME": "Maryam Usman",
+    "PHONE": "7034273006.0",
+    "EMAIL": "maryamusmn@gmail.com",
+    "Date of birth": "08-27",
+    "Address": "KV 65 Hausawa Road Tudun wada kaduna",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 26.0,
+    "NAME": "Saajida Hayat",
+    "PHONE": "8068140029.0",
+    "EMAIL": "Mscsajida1@gmail.com",
+    "Date of birth": "10-30",
+    "Address": "",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 27.0,
+    "NAME": "Hassan Muaazu Umar",
+    "PHONE": "8033991142.0",
+    "EMAIL": "Hmumar05@gmail.com",
+    "Date of birth": "03-03",
+    "Address": "",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 28.0,
+    "NAME": "Hauwa Suleiman",
+    "PHONE": "8090888614.0",
+    "EMAIL": "hwsuleiman2@gmail.com",
+    "Date of birth": "09-06",
+    "Address": "",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 29.0,
+    "NAME": "Hassana Yusuf Gimi",
+    "PHONE": "8165426333.0",
+    "EMAIL": "hassanagimi@gmail.com",
+    "Date of birth": "08-17",
+    "Address": "",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 30.0,
+    "NAME": "Nafisatu Abdulaziz",
+    "PHONE": "8069733802.0",
+    "EMAIL": "nafysatabdulaziz@gmail.com",
+    "Date of birth": "03-03",
+    "Address": "",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 31.0,
+    "NAME": "Hafsat musa Mogauri",
+    "PHONE": "8036648936.0",
+    "EMAIL": "Hmogauri@gmail.com",
+    "Date of birth": "03-11",
+    "Address": "",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 32.0,
+    "NAME": "Maryam Umar Asipita",
+    "PHONE": "8174887847.0",
+    "EMAIL": "Mareamomar45@gmail.com",
+    "Date of birth": "10-17",
+    "Address": "",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 33.0,
+    "NAME": "Abdullahi Gambo",
+    "PHONE": "8097938140.0",
+    "EMAIL": "gamboabd41@gmail.com",
+    "Date of birth": "11-01",
+    "Address": "No 29 Ningi street off Makarfi road, Rigasa Kaduna",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 34.0,
+    "NAME": "Alhussain Abdullahi",
+    "PHONE": "8036267596.0",
+    "EMAIL": "alfazeellion@gmail.com",
+    "Date of birth": "",
+    "Address": "No. C11 Ramat Close Unguwan Rimi, Kaduna",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 35.0,
+    "NAME": "Maryam khalil",
+    "PHONE": "8036265754.0",
+    "EMAIL": "khalilmaryam11@gmail.com",
+    "Date of birth": "10-03",
+    "Address": "No 10 SMC staff quarters U/dosa kaduna",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 36.0,
+    "NAME": "Maimunatu Abubakar",
+    "PHONE": "8138644340.0",
+    "EMAIL": "maymunahummy@gmail.com",
+    "Date of birth": "08-24",
+    "Address": "No A19 Harvester close Kappoly Quarters Panteka Kaduna",
+    "photo": "REPLACE_WITH_GOOGLE_DRIVE_LINK"
+  },
+  {
+    "SN": 37.0,
+    "NAME": "Raliya Aliyu",
+    "PHONE": "8038543110.0",
+    "EMAIL": "rahleeyhaali@gmail.com",
+    "Date of birth": "08-17",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 38.0,
+    "NAME": "Muhammad Muhammad Yusuf",
+    "PHONE": "8135559081.0",
+    "EMAIL": "muhdmainayusuf35@gmail.com",
+    "Date of birth": "10-03",
+    "Address": "No 25 Jaji Road Malali, Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 39.0,
+    "NAME": "Abubakar Abdullahi",
+    "PHONE": "8131860236.0",
+    "EMAIL": "abdullahii236k@gmail.com",
+    "Date of birth": "04-29",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 40.0,
+    "NAME": "Amina Musa Ilyasu",
+    "PHONE": "8162279097.0",
+    "EMAIL": "ameenatumusa@gmail.com",
+    "Date of birth": "",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 41.0,
+    "NAME": "Mustapha Abdulhamid Bashir",
+    "PHONE": "9061387299.0",
+    "EMAIL": "Mustybash4@gmail.com",
+    "Date of birth": "10-23",
+    "Address": "Bz 28 saminaka road tudun wada kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 42.0,
+    "NAME": "Nafisa Abubakar Usman",
+    "PHONE": "8024764275.0",
+    "EMAIL": "ummisaifullahi1@gmail.com",
+    "Date of birth": "05-05",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 43.0,
+    "NAME": "Amina Muhammad Jiya",
+    "PHONE": "7036865359.0",
+    "EMAIL": "amjyaman@gmail.com",
+    "Date of birth": "07-11",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 44.0,
+    "NAME": "Ibrahim Abdullahi (Mazangari)",
+    "PHONE": "8133330862.0",
+    "EMAIL": "iamazangari05@gmail.com",
+    "Date of birth": "03-23",
+    "Address": "No 5 Ababe close (Lambu) Kawo New Extension, Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1HqrAwEuQ-KjHnABfm0ArWhQKi2VEG4ta=w500-h300"
+  },
+  {
+    "SN": 46.0,
+    "NAME": "Khadijat Mansir Mohammed",
+    "PHONE": "8069212709.0",
+    "EMAIL": "mansurkhadijat@gmail.com",
+    "Date of birth": "",
+    "Address": "No. 9 gumbi road of Madina street Hayin malam bello kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 47.0,
+    "NAME": "Mohammed Mohammed Mansur",
+    "PHONE": "8060342477.0",
+    "EMAIL": "Muhammadmansir47@gmail.com",
+    "Date of birth": "07-04",
+    "Address": "No. 9 gumbi road of Madina street Hayin malam bello kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 48.0,
+    "NAME": "Ismail Murtala tomiwa",
+    "PHONE": "7044939699.0",
+    "EMAIL": "tomiwaismail28@gmail.com",
+    "Date of birth": "04-17",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 49.0,
+    "NAME": "Amina Aliyu Mamman",
+    "PHONE": "8033993580.0",
+    "EMAIL": "quindaurama2@gmail.com",
+    "Date of birth": "07-26",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 50.0,
+    "NAME": "Usman Fauziyya Abdulrahman",
+    "PHONE": "7036291599.0",
+    "EMAIL": "Fauzeeabdul28@gmail.com",
+    "Date of birth": "12-28",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 51.0,
+    "NAME": "Fatima S Dahiru",
+    "PHONE": "8065849799.0",
+    "EMAIL": "Turaisalihu@gmail.com",
+    "Date of birth": "11-17",
+    "Address": "No 9 Giwa road, Abakpa",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 52.0,
+    "NAME": "Fadila Muhammad",
+    "PHONE": "8067680539.0",
+    "EMAIL": "fadiilamuhammad40@gmail.com",
+    "Date of birth": "08-12",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 53.0,
+    "NAME": "Hafsat Abdullahi",
+    "PHONE": "8063355000.0",
+    "EMAIL": "abdullahihafsat908@gmail.com",
+    "Date of birth": "05-15",
+    "Address": "No 8 Unguwar Dosa Layin tanki, Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1JFvdHCFFPD1IOXPBB7Hb_PDTjuBeq6Wk=w400"
+  },
+  {
+    "SN": 54.0,
+    "NAME": "Hassan Sadisu Imam",
+    "PHONE": "8036399690.0",
+    "EMAIL": "",
+    "Date of birth": "",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 55.0,
+    "NAME": "Maryam shehu",
+    "PHONE": "7067361105.0",
+    "EMAIL": "maryamshehu9419@gamil-com",
+    "Date of birth": "01-06",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 56.0,
+    "NAME": "Umaimat Ismail Oyiza",
+    "PHONE": "8160947599.0",
+    "EMAIL": "ummaimatismail@gmail.com",
+    "Date of birth": "2025-10-21 00:00:00",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 57.0,
+    "NAME": "Abubakar Yusuf Ashafa",
+    "PHONE": "8061350827.0",
+    "EMAIL": "aashafa844@gmail.com",
+    "Date of birth": "08-16",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400"
+  },
+  {
+    "SN": 58.0,
+    "NAME": "Jalilah Ozohu Abdullahi",
+    "PHONE": "7031313244.0",
+    "EMAIL": "jalilah.abdul@gmail.com",
+    "Date of birth": "01-20",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 59.0,
+    "NAME": "Yusrah Bappah",
+    "PHONE": "8063138447.0",
+    "EMAIL": "yusrahbappah0@gmail.com",
+    "Date of birth": "06-09",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 60.0,
+    "NAME": "Rabiu fatima zahra",
+    "PHONE": "8167834386.0",
+    "EMAIL": "fatimazahrarabiu1@gmail.com",
+    "Date of birth": "08-27",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 61.0,
+    "NAME": "Abbas Adamu Tanko",
+    "PHONE": "8036965908.0",
+    "EMAIL": "abbastk2@gmail.com",
+    "Date of birth": "11-10",
+    "Address": "No.f5 BBima Road T/nupawa kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 62.0,
+    "NAME": "Imrana Yusuf Umar",
+    "PHONE": "7062919351.0",
+    "EMAIL": "Imranayusufumar@gmail.com",
+    "Date of birth": "02-03",
+    "Address": "No 164 Kebbi road Kurmin Mashi Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1UbelYwvNcb2WpBMk7BAiWMxkUuCv-zWI"
+  },
+  {
+    "SN": 63.0,
+    "NAME": "Aliyu Aliyu Suleiman",
+    "PHONE": "7063671662.0",
+    "EMAIL": "aliyu.black@gmail.com",
+    "Date of birth": "2025-11-22 00:00:00",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 64.0,
+    "NAME": "Bilkisu Alhassan Yaro",
+    "PHONE": "8060303931.0",
+    "EMAIL": "bilkisuyaro@yahoo.com",
+    "Date of birth": "04-20",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400"
+  },
+  {
+    "SN": 65.0,
+    "NAME": "Abdulsalam munirat",
+    "PHONE": "7060649842.0",
+    "EMAIL": "municandy03@gmail.com",
+    "Date of birth": "11-03",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400"
+  },
+  {
+    "SN": 66.0,
+    "NAME": "AMINA ALIYU DANBABA",
+    "PHONE": "8032259454.0",
+    "EMAIL": "aminaaliyu16@gmail.com",
+    "Date of birth": "08-21",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400"
+  },
+  {
+    "SN": 67.0,
+    "NAME": "Abudulkadir Ameen Yahya",
+    "PHONE": "7054677173.0",
+    "EMAIL": "",
+    "Date of birth": "",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 68.0,
+    "NAME": "Amina Yunus",
+    "PHONE": "8099201196.0",
+    "EMAIL": "aminayunus05@gmail.com",
+    "Date of birth": "11-01",
+    "Address": "No.6 kadpoly main campus qtrs tudun wada kd",
+    "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400"
+  },
+  {
+    "SN": 69.0,
+    "NAME": "Hafsat Muhammed Bala",
+    "PHONE": "7060761313.0",
+    "EMAIL": "hafsata6076@gmail.com",
+    "Date of birth": "09-21",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 70.0,
+    "NAME": "Nafisa Abubakar Usman",
+    "PHONE": "8024764275.0",
+    "EMAIL": "ummisaifullahi1@gmail.com",
+    "Date of birth": "05-05",
+    "Address": "Plot 478 Gbazango Extension Kubwa Abuja",
+    "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400"
+  },
+  {
+    "SN": 71.0,
+    "NAME": "Zaliha Aliyu Guragi",
+    "PHONE": "7032193402.0",
+    "EMAIL": "",
+    "Date of birth": "03-05",
+    "Address": "No 60 Abuja Road Rigasa Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 72.0,
+    "NAME": "Abubakar Muhammad",
+    "PHONE": "8130552593.0",
+    "EMAIL": "Abubakarm790@gmail.com",
+    "Date of birth": "",
+    "Address": "Zb 21 Takun Road Tudun wada Kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 73.0,
+    "NAME": "Mubarak Aminu Bebeji",
+    "PHONE": "8163238289.0",
+    "EMAIL": "Mabebeji999@gmail.com",
+    "Date of birth": "01-01",
+    "Address": "No.A9 beam close poly quarters kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+    {
+    "SN": 74,
+    "NAME": "Muhammad Mika'il",
+    "PHONE": "8065538695",
+    "EMAIL": "kademi75@gmail.com",
+    "Date of birth": "02-12",
+    "Address": "A19 harvester close polytechnic quarters kaduna",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  },
+  {
+    "SN": 75,
+    "NAME": "Musa Duwan Ahmad",
+    "PHONE": "8030806045",
+    "EMAIL": "Ahmadmusaduwan@gmail.com",
+    "Date of birth": "12-12",
+    "Address": "",
+    "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400"
+  }
+    ];
+
+    // Format phone number
+    function formatPhone(phone) {
+      if (!phone) return 'Phone not available';
+      const num = String(phone).replace('.0', '');
+      return num.slice(0, 4) + ' ' + num.slice(4, 7) + ' ' + num.slice(7);
+    }
+
+    // Update the count display
+    function updateCountDisplay(count, total) {
+      const countDisplay = document.getElementById('classmate-count');
+      countDisplay.textContent = `Showing ${count} of ${total} classmates`;
+    }
+
+    // Display all classmates
+    function displayClassmates(data = classmates) {
+      const gallery = document.getElementById('classmate-gallery');
+      
+      if (!gallery) {
+        console.error('Gallery element not found!');
+        return;
+      }
+      
+      gallery.innerHTML = '';
+      
+      if (!data || data.length === 0) {
+        gallery.innerHTML = '<div class="no-results">No classmates found matching your search</div>';
+        updateCountDisplay(0, classmates.length);
+        return;
+      }
+      
+      data.forEach(classmate => {
+        const card = document.createElement('div');
+        card.className = 'gallery-card';
+        
+        card.innerHTML = `
+          <img src="${classmate.photo || 'https://via.placeholder.com/300x250/6a0dad/ffffff?text=No+Photo'}" 
+               alt="${classmate.NAME || 'Classmate'}" 
+               class="gallery-photo" 
+               onerror="this.onerror=null;this.src='https://via.placeholder.com/300x250/6a0dad/ffffff?text=No+Photo'">
+          <div class="gallery-details">
+            <h3>${classmate.NAME || 'Name not available'}</h3>
+            <p><i class="fas fa-phone"></i> ${formatPhone(classmate.PHONE)}</p>
+            <p><i class="fas fa-envelope"></i> ${classmate.EMAIL || 'No email'}</p>
+            <p><i class="fas fa-birthday-cake"></i> ${classmate['Date of birth'] || 'DOB not specified'}</p>
+            <p><i class="fas fa-map-marker-alt"></i> ${classmate.Address || 'Address not provided'}</p>
+          </div>
+        `;
+        
+        gallery.appendChild(card);
+      });
+      
+      // Update the count display
+      updateCountDisplay(data.length, classmates.length);
+    }
+
+    // Search functionality
+    function searchClassmates() {
+      const term = document.getElementById('search').value.toLowerCase();
+      const results = classmates.filter(classmate => 
+        (classmate.NAME && classmate.NAME.toLowerCase().includes(term)) ||
+        (classmate.PHONE && String(classmate.PHONE).includes(term)) || 
+        (classmate.EMAIL && classmate.EMAIL.toLowerCase().includes(term)) ||
+        (classmate.Address && classmate.Address.toLowerCase().includes(term))
+      );
+      
+      displayClassmates(results.length > 0 ? results : []);
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Display all classmates immediately
+      displayClassmates();
+      
+      // Set up search functionality
+      document.getElementById('search-btn').addEventListener('click', searchClassmates);
+      document.getElementById('search').addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+          searchClassmates();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

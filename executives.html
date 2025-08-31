@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Executive Team</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    /* Navbar - updated with purple theme */
+    header {
+      background-color: #6a0dad;
+      box-shadow: 0 4px 12px rgba(106, 13, 173, 0.3);
+    }
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 70px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 12px 25px;
+      margin: 0 5px;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 30px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    nav a:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: width 0.4s ease;
+      z-index: -1;
+    }
+    nav a:hover:before,
+    nav a.active:before {
+      width: 100%;
+    }
+    nav a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(106, 13, 173, 0.4);
+    }
+    nav a.active {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .executive-header {
+      text-align: center;
+      margin: 40px 0 50px;
+    }
+
+    .executive-header h1 {
+      color: #6a0dad;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+    }
+    .executive-header h1:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(to right, #6a0dad, #9d4edd);
+      border-radius: 3px;
+    }
+
+    .executive-header p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .executive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .executive-card {
+      background: white;
+      border-radius: 12px;
+      border-top: 5px solid #6a0dad;
+      box-shadow: 0 8px 20px rgba(106, 13, 173, 0.1);
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+    }
+
+    .executive-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(106, 13, 173, 0.2);
+    }
+
+    .executive-photo {
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+      background: #f0e6ff;
+    }
+
+    .executive-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .executive-card:hover .executive-photo img {
+      transform: scale(1.05);
+    }
+
+    .executive-info {
+      padding: 25px;
+    }
+
+    .executive-info h3 {
+      margin: 0;
+      color: #6a0dad;
+      font-size: 1.5rem;
+    }
+
+    .executive-info .position {
+      color: #e74c3c;
+      font-weight: bold;
+      margin: 10px 0;
+      font-size: 1.1rem;
+    }
+
+    .executive-info p {
+      margin: 10px 0;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .executive-social {
+      display: flex;
+      margin-top: 20px;
+    }
+
+    .executive-social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #f0e6ff;
+      border-radius: 50%;
+      margin-right: 12px;
+      color: #6a0dad;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .executive-social a:hover {
+      background: #6a0dad;
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    footer {
+      background: #6a0dad;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      margin-top: 60px;
+      position: relative;
+    }
+    footer:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 10px;
+      background: linear-gradient(to right, #6a0dad, #9d4edd, #6a0dad);
+    }
+    footer p {
+      margin: 0;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    footer p i {
+      color: #ffd700;
+      margin: 0 5px;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 0;
+      }
+      nav a {
+        margin: 8px 0;
+        width: 80%;
+        text-align: center;
+      }
+      
+      .executive-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .executive-header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="executives.html" class="active">Executive Team</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="albums.html">Photo Albums</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="executive-header">
+      <h1>Our Executive Team</h1>
+      <p>The leadership team dedicated to making our class experience exceptional</p>
+    </div>
+
+    <div class="executive-grid">
+      <!-- President -->
+      <div class="executive-card">
+        <div class="executive-photo">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="President">
+        </div>
+        <div class="executive-info">
+          <h3>Abbas Sule Ahmadu</h3>
+          <div class="position">Class President</div>
+          <p><i class="fas fa-envelope"></i> abbas_ahmadu@yahoo.com</p>
+          <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+          <p>Responsible for overall class leadership and coordination with faculty.</p>
+          <div class="executive-social">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vice President -->
+      <div class="executive-card">
+        <div class="executive-photo">
+          <img src="https://lh3.googleusercontent.com/d/1b-lX7PNR2TgK49-bH6UKWU3qEOs1yxqC=w400" alt="Vice President">
+        </div>
+        <div class="executive-info">
+          <h3>Rhoda Autah</h3>
+          <div class="position">Vice President</div>
+          <p><i class="fas fa-envelope"></i> s.williams@class.edu</p>
+          <p><i class="fas fa-phone"></i> (555) 234-5678</p>
+          <p>Assists the president and oversees class committees.</p>
+          <div class="executive-social">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secretary -->
+      <div class="executive-card">
+        <div class="executive-photo">
+          <img src="https://lh3.googleusercontent.com/d/1Ta8kaaULIxg3W-xU6ihahuTq2emTt_ge=w500" alt="Secretary">
+        </div>
+        <div class="executive-info">
+          <h3>YUSUF YAKUBU YUSUF</h3>
+          <div class="position">Secretary</div>
+          <p><i class="fas fa-envelope"></i> yusuf.yyakubu@abu.edu.ng</p>
+          <p><i class="fas fa-phone"></i> (+234) 8066-916130</p>
+          <p>Maintains class records and meeting minutes.</p>
+          <div class="executive-social">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Treasurer -->
+      <div class="executive-card">
+        <div class="executive-photo">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Treasurer">
+        </div>
+        <div class="executive-info">
+          <h3>Ahmad Uba Rahama</h3>
+          <div class="position">Treasurer</div>
+          <p><i class="fas fa-envelope"></i> d.kim@class.edu</p>
+          <p><i class="fas fa-phone"></i> (555) 456-7890</p>
+          <p>Manages class finances and fundraising activities.</p>
+          <div class="executive-social">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Chair -->
+      <div class="executive-card">
+        <div class="executive-photo">
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Social Chair">
+        </div>
+        <div class="executive-info">
+          <h3>Jamal Carter</h3>
+          <div class="position">Social Chair</div>
+          <p><i class="fas fa-envelope"></i> j.carter@class.edu</p>
+          <p><i class="fas fa-phone"></i> (555) 567-8901</p>
+          <p>Organizes class events and social activities.</p>
+          <div class="executive-social">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-snapchat"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Academic Rep -->
+      <div class="executive-card">
+        <div class="executive-photo">
+          <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Academic Rep">
+        </div>
+        <div class="executive-info">
+          <h3>Priya Patel</h3>
+          <div class="position">Academic Representative</div>
+          <p><i class="fas fa-envelope"></i> p.patel@class.edu</p>
+          <p><i class="fas fa-phone"></i> (555) 678-9012</p>
+          <p>Liaison between students and faculty for academic matters.</p>
+          <div class="executive-social">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Our Class. Designed with <i class="fas fa-heart"></i> by Class Executives</p>
+  </footer>
+</body>
+</html>

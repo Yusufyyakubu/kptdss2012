@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Photo Albums</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    /* Navigation */
+    header {
+      background-color: #6a0dad;
+      box-shadow: 0 4px 12px rgba(106, 13, 173, 0.3);
+    }
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 70px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 12px 25px;
+      margin: 0 5px;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 30px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    nav a:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: width 0.4s ease;
+      z-index: -1;
+    }
+    nav a:hover:before,
+    nav a.active:before {
+      width: 100%;
+    }
+    nav a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(106, 13, 173, 0.4);
+    }
+    nav a.active {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .header h1 {
+      color: #6a0dad;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+    }
+    .header h1:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(to right, #6a0dad, #9d4edd);
+      border-radius: 3px;
+    }
+    
+    .header p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .albums-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .album-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(106, 13, 173, 0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+    }
+    .album-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(106, 13, 173, 0.2);
+    }
+
+    .album-cover {
+      height: 250px;
+      overflow: hidden;
+      position: relative;
+    }
+    .album-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .album-card:hover .album-cover img {
+      transform: scale(1.05);
+    }
+    .album-count {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(106, 13, 173, 0.9);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .album-info {
+      padding: 20px;
+    }
+    .album-info h3 {
+      margin: 0 0 10px;
+      color: #6a0dad;
+      font-size: 1.4rem;
+    }
+    .album-info p {
+      margin: 0;
+      color: #666;
+      line-height: 1.5;
+    }
+    .album-date {
+      display: block;
+      margin-top: 10px;
+      color: #9d4edd;
+      font-weight: bold;
+    }
+
+    .view-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 8px 20px;
+      background: linear-gradient(to right, #6a0dad, #9d4edd);
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    .view-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(106, 13, 173, 0.4);
+    }
+
+    footer {
+      background: #6a0dad;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      margin-top: 60px;
+      position: relative;
+    }
+    footer:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 10px;
+      background: linear-gradient(to right, #6a0dad, #9d4edd, #6a0dad);
+    }
+    footer p {
+      margin: 0;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    footer p i {
+      color: #ffd700;
+      margin: 0 5px;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 0;
+      }
+      nav a {
+        margin: 8px 0;
+        width: 80%;
+        text-align: center;
+      }
+      
+      .albums-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="executives.html">Executive Team</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="albums.html" class="active">Photo Albums</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="header">
+      <h1>Class Photo Albums</h1>
+      <p>Relive our memorable moments through these curated photo collections</p>
+    </div>
+
+    <div class="albums-grid">
+      <!-- Album 1 -->
+      <div class="album-card">
+        <div class="album-cover">
+          <img src="https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" alt="Class Retreat">
+          <span class="album-count">24 Photos</span>
+        </div>
+        <div class="album-info">
+          <h3>Class Retreat 2024</h3>
+          <p>Our amazing weekend getaway filled with team-building activities and fun moments.</p>
+          <span class="album-date">March 15-17, 2024</span>
+          <a href="#" class="view-btn">View Album</a>
+        </div>
+      </div>
+
+      <!-- Album 2 -->
+      <div class="album-card">
+        <div class="album-cover">
+          <img src="https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" alt="Graduation Day">
+          <span class="album-count">18 Photos</span>
+        </div>
+        <div class="album-info">
+          <h3>Graduation Day</h3>
+          <p>Celebrating our achievements and the end of an incredible journey together.</p>
+          <span class="album-date">June 5, 2024</span>
+          <a href="#" class="view-btn">View Album</a>
+        </div>
+      </div>
+
+      <!-- Album 3 -->
+      <div class="album-card">
+        <div class="album-cover">
+          <img src="https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" alt="Field Trip">
+          <span class="album-count">32 Photos</span>
+        </div>
+        <div class="album-info">
+          <h3>Science Field Trip</h3>
+          <p>Exploring the national research center and learning outside the classroom.</p>
+          <span class="album-date">October 12, 2023</span>
+          <a href="#" class="view-btn">View Album</a>
+        </div>
+      </div>
+
+      <!-- Album 4 -->
+      <div class="album-card">
+        <div class="album-cover">
+          <img src="https://via.placeholder.com/600x400/6a0dad/ffffff?text=Class+Party" alt="Class Party">
+          <span class="album-count">15 Photos</span>
+        </div>
+        <div class="album-info">
+          <h3>End of Semester Party</h3>
+          <p>Letting loose after finals with music, food, and great company.</p>
+          <span class="album-date">December 20, 2023</span>
+          <a href="#" class="view-btn">View Album</a>
+        </div>
+      </div>
+
+      <!-- Album 5 -->
+      <div class="album-card">
+        <div class="album-cover">
+          <img src="https://via.placeholder.com/600x400/9d4edd/ffffff?text=Study+Session" alt="Study Session">
+          <span class="album-count">8 Photos</span>
+        </div>
+        <div class="album-info">
+          <h3>Study Sessions</h3>
+          <p>Those late nights in the library when we helped each other succeed.</p>
+          <span class="album-date">Various Dates</span>
+          <a href="#" class="view-btn">View Album</a>
+        </div>
+      </div>
+
+      <!-- Album 6 -->
+      <div class="album-card">
+        <div class="album-cover">
+          <img src="https://via.placeholder.com/600x400/6a0dad/ffffff?text=Class+Project" alt="Class Project">
+          <span class="album-count">12 Photos</span>
+        </div>
+        <div class="album-info">
+          <h3>Group Projects</h3>
+          <p>Collaborating on assignments and presentations throughout the year.</p>
+          <span class="album-date">2023-2024</span>
+          <a href="#" class="view-btn">View Album</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Our Class. Designed with <i class="fas fa-heart"></i> by Class Executives</p>
+  </footer>
+</body>
+</html>
