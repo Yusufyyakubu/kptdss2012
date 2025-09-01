@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Class Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -230,61 +229,6 @@
       font-size: 0.95rem;
     }
 
-    /* Email Button */
-    .email-button {
-      background: linear-gradient(to right, #6a0dad, #9d4edd);
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 30px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 15px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(106, 13, 173, 0.3);
-    }
-    .email-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(106, 13, 173, 0.4);
-    }
-    .email-button:active {
-      transform: translateY(1px);
-    }
-    .email-button:disabled {
-      background: #cccccc;
-      cursor: not-allowed;
-    }
-
-    /* Notification */
-    .notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 15px 25px;
-      border-radius: 8px;
-      color: white;
-      font-weight: bold;
-      z-index: 1000;
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: opacity 0.3s, transform 0.3s;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-    .notification.success {
-      background: #4CAF50;
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .notification.error {
-      background: #F44336;
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .notification.hidden {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-
     /* Footer */
     footer {
       background: #6a0dad;
@@ -373,94 +317,87 @@
     <p>&copy; KPTDSS 2012. Designed with <i class="fas fa-heart"></i> by Yusuf Ycube</p>
   </footer>
 
-  <!-- Notification -->
-  <div id="notification" class="notification hidden"></div>
-
   <!-- Script -->
   <script>
-    // Initialize EmailJS with your public key
-    (function() {
-      emailjs.init("Hr5jyiaZeFXLORt9j");
-    })();
-
     const classmates = [
-      { "NAME": "YUSUF YAKUBU YUSUF", "PHONE": "8066916130", "EMAIL": "yusufyakubuyusuf@gmail.com", "Date of birth": "02-02", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
-      { "NAME": "Rhoda Auta", "PHONE": "8108344506", "EMAIL": "autarhoda222@gmail.com", "Date of birth": "09-06", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Abdullateef Opemipo Otolowo", "PHONE": "8130964767", "EMAIL": "Abdullateefotolowo14@gmail.com", "Date of birth": "06-14", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Bilkisu Usman Rumah", "PHONE": "8065992015", "EMAIL": "beerumahsstore@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Ahmad isah", "PHONE": "7066234353", "EMAIL": "a.daura9@gmail.com", "Date of birth": "02-01", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Salim Ishaq Guibi", "PHONE": "8140767257", "EMAIL": "sirguibi1@gmail.com", "Date of birth": "11-19", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
-      { "NAME": "Zulaihat Muhammed Bashir", "PHONE": "8169094162", "EMAIL": "zulaihatmuhammedbashir@gmail.com", "Date of birth": "04-07", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Amina Nasir", "PHONE": "7035193783", "EMAIL": "aminanasirsadiq@gmail.com", "Date of birth": "10-18", "photo": "https://lh3.googleusercontent.com/d/1aEl44_GtmXcjvKbPKnZdrqJq_RSBqhHm=w400" },
-      { "NAME": "Saleem Aliyu Mamman", "PHONE": "9032304172", "EMAIL": "saleemaliyum@gmail.com", "Date of birth": "09-01", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Abdulrahman Suleiman Suleiman", "PHONE": "8166861444", "EMAIL": "abilitysman@outlook.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Mustapha Muhammad Iliyas", "PHONE": "8108344447", "EMAIL": "muhammad1995mustapha1995@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Ridwan Abdulazeez Yusuf", "PHONE": "7062398354", "EMAIL": "ridson4real@gmail.com", "Date of birth": "28th January", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Bappah Firdausi yusuf", "PHONE": "8108096264", "EMAIL": "fiddy005@gmail.com", "Date of birth": "09-10", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Ummusalama Abdulkadir Abba", "PHONE": "8034241214", "EMAIL": "abbaummusalma@gmail.com", "Date of birth": "07-16", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Ahmad Uba Rahama", "PHONE": "8036544565", "EMAIL": "aurahama7@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Abbas Sule Ahmadu", "PHONE": "7035881383", "EMAIL": "ahmadabbas696@gmail.com", "Date of birth": "06-12", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Nafisat Oziohu Suleiman", "PHONE": "8160029491", "EMAIL": "Nafisat1994@gmail.com", "Date of birth": "04-05", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Christopher A. Bature", "PHONE": "8148429908", "EMAIL": "Christopherbature1@gmail.com", "Date of birth": "09-30", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Fauziya Abdusalam", "PHONE": "8096788796", "EMAIL": "abdussalamfauziya@gmail.com", "Date of birth": "04-01", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Japheth Benjamin", "PHONE": "8160969021", "EMAIL": "japhxongz@gmail.com", "Date of birth": "10-06", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Hadi Auwal", "PHONE": "7066954331", "EMAIL": "hadeeauwal24@gmail.com", "Date of birth": "03-07", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Asma'u Abdullahi Tanko", "PHONE": "8068222680", "EMAIL": "asmauahat94@gmail.com", "Date of birth": "11-16", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Samira Muhammad Idris", "PHONE": "8036961800", "EMAIL": "Samiramuhammedidris@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Abdullahi Nura Bako", "PHONE": "8061606610", "EMAIL": "Nurabako111@gmail.com", "Date of birth": "01-28", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Maryam Usman", "PHONE": "7034273006", "EMAIL": "maryamusmn@gmail.com", "Date of birth": "08-27", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Saajida Hayat", "PHONE": "8068140029", "EMAIL": "Mscsajida1@gmail.com", "Date of birth": "10-30", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Hassan Muaazu Umar", "PHONE": "8033991142", "EMAIL": "Hmumar05@gmail.com", "Date of birth": "03-03", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Hauwa Suleiman", "PHONE": "8090888614", "EMAIL": "hwsuleiman2@gmail.com", "Date of birth": "09-06", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Saajida Hayat", "PHONE": "8068140029", "EMAIL": "Mscsajida1@gmail.com", "Date of birth": "10-30", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Hassan Muaazu Umar", "PHONE": "8033991142", "EMAIL": "Hmumar05@gmail.com", "Date of birth": "03-03", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Hassana Yusuf Gimi", "PHONE": "8165426333", "EMAIL": "hassanagimi@gmail.com", "Date of birth": "08-17", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Nafisatu Abdulaziz", "PHONE": "8069733802", "EMAIL": "nafysatabdulaziz@gmail.com", "Date of birth": "03-03", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Hafsat musa Mogauri", "PHONE": "8036648936", "EMAIL": "Hmogauri@gmail.com", "Date of birth": "03-11", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Maryam Umar Asipita", "PHONE": "8174887847", "EMAIL": "Mareamomar45@gmail.com", "Date of birth": "10-17", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Abdullahi Gambo", "PHONE": "8097938140", "EMAIL": "gamboabd41@gmail.com", "Date of birth": "11-01", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Alhussain Abdullahi", "PHONE": "8036267596", "EMAIL": "alfazeellion@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Maryam khalil", "PHONE": "8036265754", "EMAIL": "khalilmaryam11@gmail.com", "Date of birth": "10-03", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Maimunatu Abubakar", "PHONE": "8138644340", "EMAIL": "maymunahummy@gmail.com", "Date of birth": "08-24", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Raliya Aliyu", "PHONE": "8038543110", "EMAIL": "rahleeyhaali@gmail.com", "Date of birth": "08-17", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Muhammad Muhammad Yusuf", "PHONE": "8135559081", "EMAIL": "muhdmainayusuf35@gmail.com", "Date of birth": "10-03", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Abubakar Abdullahi", "PHONE": "8131860236", "EMAIL": "abdullahii236k@gmail.com", "Date of birth": "04-29", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Amina Musa Ilyasu", "PHONE": "8162279097", "EMAIL": "ameenatumusa@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Mustapha Abdulhamid Bashir", "PHONE": "9061387299", "EMAIL": "Mustybash4@gmail.com", "Date of birth": "10-23", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Nafisa Abubakar Usman", "PHONE": "8024764275", "EMAIL": "ummisaifullahi1@gmail.com", "Date of birth": "05-05", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Amina Muhammad Jiya", "PHONE": "7036865359", "EMAIL": "amjyaman@gmail.com", "Date of birth": "07-11", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Ibrahim Abdullahi (Mazangari)", "PHONE": "8133330862", "EMAIL": "iamazangari05@gmail.com", "Date of birth": "03-23", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Hauwa Suleiman", "PHONE": "8090888614", "EMAIL": "hwsuleiman2@gmail.com", "Date of birth": "6th September", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Khadijat Mansir Mohammed", "PHONE": "8069212709", "EMAIL": "mansurkhadijat@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Mohammed Mohammed Mansur", "PHONE": "8060342477", "EMAIL": "Muhammadmansir47@gmail.com", "Date of birth": "07-04", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Ismail Murtala tomiwa", "PHONE": "7044939699", "EMAIL": "tomiwaismail28@gmail.com", "Date of birth": "04-17", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Amina Aliyu Mamman", "PHONE": "8033993580", "EMAIL": "quindaurama2@gmail.com", "Date of birth": "07-26", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Usman Fauziyya Abdulrahman", "PHONE": "7036291599", "EMAIL": "Fauzeeabdul28@gmail.com", "Date of birth": "12-28", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Fatima S Dahiru", "PHONE": "8065849799", "EMAIL": "Turaisalihu@gmail.com", "Date of birth": "11-17", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Fadila Muhammad", "PHONE": "8067680539", "EMAIL": "fadiilamuhammad40@gmail.com", "Date of birth": "08-12", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Hafsat Abdullahi", "PHONE": "8063355000", "EMAIL": "abdullahihafsat908@gmail.com", "Date of birth": "05-15", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Hassan Sadisu Imam", "PHONE": "8036399690", "EMAIL": "", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Maryam shehu", "PHONE": "7067361105", "EMAIL": "maryamshehu9419@gamil-com", "Date of birth": "01-06", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Umaimat Ismail Oyiza", "PHONE": "8160947599", "EMAIL": "ummaimatismail@gmail.com", "Date of birth": "2025-10-21 00:00:00", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Abubakar Yusuf Ashafa", "PHONE": "8061350827", "EMAIL": "aashafa844@gmail.com", "Date of birth": "08-16", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
-      { "NAME": "Jalilah Ozohu Abdullahi", "PHONE": "7031313244", "EMAIL": "jalilah.abdul@gmail.com", "Date of birth": "01-20", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Yusrah Bappah", "PHONE": "8063138447", "EMAIL": "yusrahbappah0@gmail.com", "Date of birth": "06-09", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Rabiu fatima zahra", "PHONE": "8167834386", "EMAIL": "fatimazahrarabiu1@gmail.com", "Date of birth": "08-27", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Abbas Adamu Tanko", "PHONE": "8036965908", "EMAIL": "abbastk2@gmail.com", "Date of birth": "11-10", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Imrana Yusuf Umar", "PHONE": "7062919351", "EMAIL": "Imranayusufumar@gmail.com", "Date of birth": "2025-02-03 00:00:00", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Aliyu Aliyu Suleiman", "PHONE": "7063671662", "EMAIL": "aliyu.black@gmail.com", "Date of birth": "2025-11-22 00:00:00", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Bilkisu Alhassan Yaro", "PHONE": "8060303931", "EMAIL": "bilkisuyaro@yahoo.com", "Date of birth": "04-20", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
-      { "NAME": "Abdulsalam munirat", "PHONE": "7060649842", "EMAIL": "municandy03@gmail.com", "Date of birth": "11-03", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
-      { "NAME": "AMINA ALIYU DANBABA", "PHONE": "8032259454", "EMAIL": "aminaaliyu16@gmail.com", "Date of birth": "08-21", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
-      { "NAME": "Abudulkadir Ameen Yahya", "PHONE": "7054677173", "EMAIL": "", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Amina Yunus", "PHONE": "8099201196", "EMAIL": "aminayunus05@gmail.com", "Date of birth": "11-01", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
-      { "NAME": "Hafsat Muhammed Bala", "PHONE": "7060761313", "EMAIL": "hafsata6076@gmail.com", "Date of birth": "09-21", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Nafisa Abubakar Usman", "PHONE": "8024764275", "EMAIL": "ummisaifullahi1@gmail.com", "Date of birth": "05-05", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
-      { "NAME": "Zaliha Aliyu Guragi", "PHONE": "7032193402", "EMAIL": "", "Date of birth": "03-05", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Abubakar Muhammad", "PHONE": "8130552593", "EMAIL": "Abubakarm790@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Mubarak Aminu Bebeji", "PHONE": "8163238289", "EMAIL": "Mabebeji999@gmail.com", "Date of birth": "01-01", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Muhammad Mika'il", "PHONE": "8065538695", "EMAIL": "kademi75@gmail.com", "Date of birth": "02-12", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
-      { "NAME": "Musa Duwan Ahmad", "PHONE": "8030806045", "EMAIL": "Ahmadmusaduwan@gmail.com", "Date of birth": "12-12", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" }
+{ "NAME": "YUSUF YAKUBU YUSUF", "PHONE": "8066916130", "EMAIL": "yusufyakubuyusuf@gmail.com", "Date of birth": "02-02", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
+{ "NAME": "Rhoda Auta", "PHONE": "8108344506", "EMAIL": "autarhoda222@gmail.com", "Date of birth": "09-06", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Abdullateef Opemipo Otolowo", "PHONE": "8130964767", "EMAIL": "Abdullateefotolowo14@gmail.com", "Date of birth": "06-14", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+{ "NAME": "Bilkisu Usman Rumah", "PHONE": "8065992015", "EMAIL": "beerumahsstore@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Ahmad isah", "PHONE": "7066234353", "EMAIL": "a.daura9@gmail.com", "Date of birth": "02-01", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+{ "NAME": "Salim Ishaq Guibi", "PHONE": "8140767257", "EMAIL": "sirguibi1@gmail.com", "Date of birth": "11-19", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
+{ "NAME": "Zulaihat Muhammed Bashir", "PHONE": "8169094162", "EMAIL": "zulaihatmuhammedbashir@gmail.com", "Date of birth": "04-07", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+{ "NAME": "Amina Nasir", "PHONE": "7035193783", "EMAIL": "aminanasirsadiq@gmail.com", "Date of birth": "10-18", "photo": "https://lh3.googleusercontent.com/d/1aEl44_GtmXcjvKbPKnZdrqJq_RSBqhHm=w400" },
+{ "NAME": "Saleem Aliyu Mamman", "PHONE": "9032304172", "EMAIL": "saleemaliyum@gmail.com", "Date of birth": "09-01", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+{ "NAME": "Abdulrahman Suleiman Suleiman", "PHONE": "8166861444", "EMAIL": "abilitysman@outlook.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+{ "NAME": "Mustapha Muhammad Iliyas", "PHONE": "8108344447", "EMAIL": "muhammad1995mustapha1995@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+{ "NAME": "Ridwan Abdulazeez Yusuf", "PHONE": "7062398354", "EMAIL": "ridson4real@gmail.com", "Date of birth": "28th January", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Bappah Firdausi yusuf", "PHONE": "8108096264", "EMAIL": "fiddy005@gmail.com", "Date of birth": "09-10", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+{ "NAME": "Ummusalama Abdulkadir Abba", "PHONE": "8034241214", "EMAIL": "abbaummusalma@gmail.com", "Date of birth": "07-16", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Ahmad Uba Rahama", "PHONE": "8036544565", "EMAIL": "aurahama7@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Abbas Sule Ahmadu", "PHONE": "7035881383", "EMAIL": "ahmadabbas696@gmail.com", "Date of birth": "06-12", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Nafisat Oziohu Suleiman", "PHONE": "8160029491", "EMAIL": "Nafisat1994@gmail.com", "Date of birth": "04-05", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Christopher A. Bature", "PHONE": "8148429908", "EMAIL": "Christopherbature1@gmail.com", "Date of birth": "09-30", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Fauziya Abdusalam", "PHONE": "8096788796", "EMAIL": "abdussalamfauziya@gmail.com", "Date of birth": "04-01", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Japheth Benjamin", "PHONE": "8160969021", "EMAIL": "japhxongz@gmail.com", "Date of birth": "10-06", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+{ "NAME": "Hadi Auwal", "PHONE": "7066954331", "EMAIL": "hadeeauwal24@gmail.com", "Date of birth": "03-07", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Asma'u Abdullahi Tanko", "PHONE": "8068222680", "EMAIL": "asmauahat94@gmail.com", "Date of birth": "11-16", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Samira Muhammad Idris", "PHONE": "8036961800", "EMAIL": "Samiramuhammedidris@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+{ "NAME": "Abdullahi Nura Bako", "PHONE": "8061606610", "EMAIL": "Nurabako111@gmail.com", "Date of birth": "01-28", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Maryam Usman", "PHONE": "7034273006", "EMAIL": "maryamusmn@gmail.com", "Date of birth": "08-27", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Saajida Hayat", "PHONE": "8068140029", "EMAIL": "Mscsajida1@gmail.com", "Date of birth": "10-30", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Hassan Muaazu Umar", "PHONE": "8033991142", "EMAIL": "Hmumar05@gmail.com", "Date of birth": "03-03", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+{ "NAME": "Hauwa Suleiman", "PHONE": "8090888614", "EMAIL": "hwsuleiman2@gmail.com", "Date of birth": "09-06", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Saajida Hayat", "PHONE": "8068140029", "EMAIL": "Mscsajida1@gmail.com", "Date of birth": "10-30", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Hassan Muaazu Umar", "PHONE": "8033991142", "EMAIL": "Hmumar05@gmail.com", "Date of birth": "03-03", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Hassana Yusuf Gimi", "PHONE": "8165426333", "EMAIL": "hassanagimi@gmail.com", "Date of birth": "08-17", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Nafisatu Abdulaziz", "PHONE": "8069733802", "EMAIL": "nafysatabdulaziz@gmail.com", "Date of birth": "03-03", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Hafsat musa Mogauri", "PHONE": "8036648936", "EMAIL": "Hmogauri@gmail.com", "Date of birth": "03-11", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Maryam Umar Asipita", "PHONE": "8174887847", "EMAIL": "Mareamomar45@gmail.com", "Date of birth": "10-17", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Abdullahi Gambo", "PHONE": "8097938140", "EMAIL": "gamboabd41@gmail.com", "Date of birth": "11-01", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Alhussain Abdullahi", "PHONE": "8036267596", "EMAIL": "alfazeellion@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Maryam khalil", "PHONE": "8036265754", "EMAIL": "khalilmaryam11@gmail.com", "Date of birth": "10-03", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Maimunatu Abubakar", "PHONE": "8138644340", "EMAIL": "maymunahummy@gmail.com", "Date of birth": "08-24", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Raliya Aliyu", "PHONE": "8038543110", "EMAIL": "rahleeyhaali@gmail.com", "Date of birth": "08-17", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Muhammad Muhammad Yusuf", "PHONE": "8135559081", "EMAIL": "muhdmainayusuf35@gmail.com", "Date of birth": "10-03", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Abubakar Abdullahi", "PHONE": "8131860236", "EMAIL": "abdullahii236k@gmail.com", "Date of birth": "04-29", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Amina Musa Ilyasu", "PHONE": "8162279097", "EMAIL": "ameenatumusa@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Mustapha Abdulhamid Bashir", "PHONE": "9061387299", "EMAIL": "Mustybash4@gmail.com", "Date of birth": "10-23", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Nafisa Abubakar Usman", "PHONE": "8024764275", "EMAIL": "ummisaifullahi1@gmail.com", "Date of birth": "05-05", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Amina Muhammad Jiya", "PHONE": "7036865359", "EMAIL": "amjyaman@gmail.com", "Date of birth": "07-11", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Ibrahim Abdullahi (Mazangari)", "PHONE": "8133330862", "EMAIL": "iamazangari05@gmail.com", "Date of birth": "03-23", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Hauwa Suleiman", "PHONE": "8090888614", "EMAIL": "hwsuleiman2@gmail.com", "Date of birth": "6th September", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Khadijat Mansir Mohammed", "PHONE": "8069212709", "EMAIL": "mansurkhadijat@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Mohammed Mohammed Mansur", "PHONE": "8060342477", "EMAIL": "Muhammadmansir47@gmail.com", "Date of birth": "07-04", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Ismail Murtala tomiwa", "PHONE": "7044939699", "EMAIL": "tomiwaismail28@gmail.com", "Date of birth": "04-17", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Amina Aliyu Mamman", "PHONE": "8033993580", "EMAIL": "quindaurama2@gmail.com", "Date of birth": "07-26", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Usman Fauziyya Abdulrahman", "PHONE": "7036291599", "EMAIL": "Fauzeeabdul28@gmail.com", "Date of birth": "12-28", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Fatima S Dahiru", "PHONE": "8065849799", "EMAIL": "Turaisalihu@gmail.com", "Date of birth": "11-17", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Fadila Muhammad", "PHONE": "8067680539", "EMAIL": "fadiilamuhammad40@gmail.com", "Date of birth": "08-12", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Hafsat Abdullahi", "PHONE": "8063355000", "EMAIL": "abdullahihafsat908@gmail.com", "Date of birth": "05-15", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Hassan Sadisu Imam", "PHONE": "8036399690", "EMAIL": "", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+  { "NAME": "Maryam shehu", "PHONE": "7067361105", "EMAIL": "maryamshehu9419@gamil-com", "Date of birth": "01-06", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Umaimat Ismail Oyiza", "PHONE": "8160947599", "EMAIL": "ummaimatismail@gmail.com", "Date of birth": "2025-10-21 00:00:00", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Abubakar Yusuf Ashafa", "PHONE": "8061350827", "EMAIL": "aashafa844@gmail.com", "Date of birth": "08-16", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
+  { "NAME": "Jalilah Ozohu Abdullahi", "PHONE": "7031313244", "EMAIL": "jalilah.abdul@gmail.com", "Date of birth": "01-20", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Yusrah Bappah", "PHONE": "8063138447", "EMAIL": "yusrahbappah0@gmail.com", "Date of birth": "06-09", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Rabiu fatima zahra", "PHONE": "8167834386", "EMAIL": "fatimazahrarabiu1@gmail.com", "Date of birth": "08-27", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Abbas Adamu Tanko", "PHONE": "8036965908", "EMAIL": "abbastk2@gmail.com", "Date of birth": "11-10", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Imrana Yusuf Umar", "PHONE": "7062919351", "EMAIL": "Imranayusufumar@gmail.com", "Date of birth": "2025-02-03 00:00:00", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+  { "NAME": "Aliyu Aliyu Suleiman", "PHONE": "7063671662", "EMAIL": "aliyu.black@gmail.com", "Date of birth": "2025-11-22 00:00:00", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+  { "NAME": "Bilkisu Alhassan Yaro", "PHONE": "8060303931", "EMAIL": "bilkisuyaro@yahoo.com", "Date of birth": "04-20", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
+  { "NAME": "Abdulsalam munirat", "PHONE": "7060649842", "EMAIL": "municandy03@gmail.com", "Date of birth": "11-03", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
+  { "NAME": "AMINA ALIYU DANBABA", "PHONE": "8032259454", "EMAIL": "aminaaliyu16@gmail.com", "Date of birth": "08-21", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
+  { "NAME": "Abudulkadir Ameen Yahya", "PHONE": "7054677173", "EMAIL": "", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+  { "NAME": "Amina Yunus", "PHONE": "8099201196", "EMAIL": "aminayunus05@gmail.com", "Date of birth": "11-01", "photo": "https://lh3.googleusercontent.com/d/1CIkvFaCN0DFK3dnk9LsrCncnKYSBUvKe=w400" },
+  { "NAME": "Hafsat Muhammed Bala", "PHONE": "7060761313", "EMAIL": "hafsata6076@gmail.com", "Date of birth": "09-21", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Nafisa Abubakar Usman", "PHONE": "8024764275", "EMAIL": "ummisaifullahi1@gmail.com", "Date of birth": "05-05", "photo": "https://lh3.googleusercontent.com/d/1aWE81JT6JKFAat8rfYChbT-oHi_WxfTe=w400" },
+  { "NAME": "Zaliha Aliyu Guragi", "PHONE": "7032193402", "EMAIL": "", "Date of birth": "03-05", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+  { "NAME": "Abubakar Muhammad", "PHONE": "8130552593", "EMAIL": "Abubakarm790@gmail.com", "Date of birth": "", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+  { "NAME": "Mubarak Aminu Bebeji", "PHONE": "8163238289", "EMAIL": "Mabebeji999@gmail.com", "Date of birth": "01-01", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+  { "NAME": "Muhammad Mika'il", "PHONE": "8065538695", "EMAIL": "kademi75@gmail.com", "Date of birth": "02-12", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" },
+  { "NAME": "Musa Duwan Ahmad", "PHONE": "8030806045", "EMAIL": "Ahmadmusaduwan@gmail.com", "Date of birth": "12-12", "photo": "https://lh3.googleusercontent.com/d/1iQ4Hhlta0FosSlNfrz4Ga0RTqEsFjjOa=w400" }
+
     ];
 
     function parseBirthday(dateStr) {
@@ -489,44 +426,6 @@
       return Math.ceil((birthday - today) / (1000 * 60 * 60 * 24));
     }
 
-    function formatPhone(phone) {
-      if (!phone) return 'Phone not available';
-      const num = String(phone).replace('.0', '');
-      return num.slice(0, 4) + ' ' + num.slice(4, 7) + ' ' + num.slice(7);
-    }
-
-    function showNotification(message, isSuccess) {
-      const notification = document.getElementById('notification');
-      notification.textContent = message;
-      notification.className = isSuccess ? 'notification success' : 'notification error';
-      
-      setTimeout(() => {
-        notification.className = 'notification hidden';
-      }, 3000);
-    }
-
-    function sendBirthdayEmail(classmate) {
-      if (!classmate.EMAIL) {
-        showNotification(`No email address for ${classmate.NAME}`, false);
-        return;
-      }
-
-      const templateParams = {
-        to_name: classmate.NAME,
-        to_email: classmate.EMAIL,
-        from_name: "KPTDSS 2012 Class Portal",
-        message: `Happy Birthday ${classmate.NAME}! Wishing you all the best on your special day from your classmates at KPTDSS 2012.`,
-        reply_to: "noreply@kptdss2012.com"
-      };
-
-      emailjs.send('default_service', 'template_wkpudwj', templateParams, 'k5bbuX6vNNebmwkCQCtl3')
-        .then(function(response) {
-          showNotification(`Birthday email sent to ${classmate.NAME} successfully!`, true);
-        }, function(error) {
-          showNotification(`Failed to send email to ${classmate.NAME}. Error: ${error.text}`, false);
-        });
-    }
-
     function displayUpcomingBirthdays() {
       let withBirthdays = classmates.map(c => {
         let bd = parseBirthday(c["Date of birth"]);
@@ -547,9 +446,6 @@
             <p><i class="fas fa-phone"></i> ${formatPhone(next.PHONE)}</p>
             <p><i class="fas fa-envelope"></i> ${next.EMAIL}</p>
             <p>In ${next.days} ${next.days === 1 ? 'day' : 'days'}</p>
-            <button class="email-button" onclick="sendBirthdayEmail(${JSON.stringify(next).replace(/"/g, '&quot;')})">
-              <i class="fas fa-envelope"></i> Send Birthday Email
-            </button>
           </div>
         `;
       }
@@ -560,13 +456,16 @@
           <h4>${c.NAME}</h4>
           <p>${c.bd.toLocaleDateString('en-GB', { month: 'short', day: 'numeric' })}</p>
           <p><i class="fas fa-phone"></i> ${formatPhone(c.PHONE)}</p>
-          <button class="email-button" onclick="sendBirthdayEmail(${JSON.stringify(c).replace(/"/g, '&quot;')})">
-            <i class="fas fa-envelope"></i> Send Email
-          </button>
         </div>
       `).join("");
 
       document.getElementById("upcoming-birthdays").innerHTML = upcoming;
+    }
+
+    function formatPhone(phone) {
+      if (!phone) return 'Phone not available';
+      const num = String(phone).replace('.0', '');
+      return num.slice(0, 4) + ' ' + num.slice(4, 7) + ' ' + num.slice(7);
     }
 
     document.addEventListener('DOMContentLoaded', displayUpcomingBirthdays);
